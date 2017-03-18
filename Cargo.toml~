@@ -1,0 +1,6 @@
+[package]
+name = "rustudp"
+version = "0.1.0"
+authors = ["mex"]
+
+[dependencies]
