@@ -1,3 +1,5 @@
+
+
 use std::str;
 use std::thread;
 use std::net::UdpSocket;
@@ -14,8 +16,6 @@ struct flipdot{
 	panels: Vec<panel>,
 }
 
-
-//static mut flipper: flipdot = flipdot{rows:0, cols:0, panels:vec![]}; 
 
 fn open_socket(portnum:i32){
 	let socket = match UdpSocket::bind("0.0.0.0:5514") {
@@ -66,9 +66,22 @@ fn initiate_panels(width: i32, height:i32, rows:i32, cols:i32) -> flipdot{
 
 fn print_screen(flipper:flipdot){
 	println!("{}", flipper.panels[0].pixels.len() );
+	println!("{}", translate_px_to_panel(flipper,80,1).0);
 }
 
 fn translate_px_to_panel(flipper:flipdot,x:i32,y:i32) -> (i32,i32){
+	let localRows = flipper.rows;
+	let localCols = flipper.cols;
+	let localWidth = flipper.panels[0].width;
+	let localHeight = flipper.panels[0].height;
+
+	let left_position_in_panel = (x % localWidth);
+	let left_panel = (x - (x % localWidth)) / localWidth;
+
+
+
+	println!("{} {}", left_position_in_panel, left_panel);
+
 	return (0,0);
 }
 
@@ -78,6 +91,6 @@ fn main() {
 
 	flipper = initiate_panels(16,20,9,6);
 	print_screen(flipper);	
-	    
+
 }
 
