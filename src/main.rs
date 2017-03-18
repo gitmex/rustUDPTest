@@ -14,6 +14,9 @@ struct flipdot{
 	panels: Vec<panel>,
 }
 
+
+//static mut flipper: flipdot = flipdot{rows:0, cols:0, panels:vec![]}; 
+
 fn open_socket(portnum:i32){
 	let socket = match UdpSocket::bind("0.0.0.0:5514") {
         Ok(s) => s,
@@ -37,14 +40,13 @@ fn open_socket(portnum:i32){
     }	
 }
 
-fn initiate_panels(width: i32, height:i32, rows:i32, cols:i32){
+fn initiate_panels(width: i32, height:i32, rows:i32, cols:i32) -> flipdot{
 	let panelcount=rows*cols;
 
 	let mut flipper: flipdot;
-	
-	
 
-
+	flipper = flipdot{rows:rows, cols:cols, panels:vec![]};
+	
 
 	for i in 0..panelcount{
 		let mut tmpPanel: panel; 
@@ -52,25 +54,30 @@ fn initiate_panels(width: i32, height:i32, rows:i32, cols:i32){
 		
 		for j in 0..width*height{
 			tmpPanel.pixels.push(false);			
-			println!("{} - {}",i,j);		
 		}		
 	
 		flipper.panels.push(tmpPanel);	
 	}
 
-	
+	println!("{}", flipper.panels.len());
+	println!("{}", flipper.panels[0].pixels.len() );
+	return flipper;
 }
 
-fn print_screen(){
-		
+fn print_screen(flipper:flipdot){
+	println!("{}", flipper.panels[0].pixels.len() );
+}
+
+fn translate_px_to_panel(flipper:flipdot,x:i32,y:i32) -> (i32,i32){
+	return (0,0);
 }
 
 fn main() {
-	let mut flipper: flipdot;
-	flipper = flipdot {rows:0, cols:0, panels:vec![]};
+	
+	let mut flipper: flipdot;	
 
-
-	initiate_panels(16,20,9,6);
-	println!("{}", flipper.panels.len());    
+	flipper = initiate_panels(16,20,9,6);
+	print_screen(flipper);	
+	    
 }
 
